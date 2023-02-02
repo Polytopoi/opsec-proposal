@@ -270,7 +270,7 @@ that it was done correctly, in the remainder of the process. Next, we generate
 a succinct proof $P$ that $h(x), h(y),$ and $h(z)$ are respectively the SHA-256
 hashes of some billion-digit integers $x$ and $y$ and some integer $z$ such that
 $x + y = z$. Next, we distribute the tuple $(h(x), h(y), h(z), P)$ into a cluster of
-people's devices, say a billion devices with a billion owners in a decentralized
+people's devices, say a million devices with a million owners in a decentralized
 network, and each of these devices checks that $P$ is a proof of the statement.
 Based on the results, we conclude either that all honest verifiers verified the proof,
 or that perhaps something else is the case.
@@ -375,8 +375,9 @@ not be proven correct in its entirety; what must be proven correct is the implem
 of the subset of the proving protocol which the verifier must perform. If the proving
 protocol implementation is wrong, but the verifier implementation is correct up to a
 negligible probability of unsoundness, then the worst that has a non-negligible probability
-of happening is a failure to prove something, which is typically more acceptable than
-certifying something as true which is false.
+of happening is a failure to prove something true (but which can be proven to the
+verifier's satisfaction by a correct prover), and typically that would be more acceptable than
+the verifier certifying something as true which is false.
 
 The preceding argument outlines some of the considerations that are going into the
 design and implementation of OSL, the Open Specification Language, and its
@@ -385,8 +386,10 @@ The Open Specification Language is a version of predicate logic, with some basic
 which is designed to be powerful enough to be useful across the board in practice, and also weak enough
 to be feasibly compile fairly directly into arithmetic circuits
 for use with succinct proving systems such as Halo 2.\footnote{\url{https://github.com/zcash/halo2}}
-As of this writing, we have an 8-stage optimizing circuit compiler for OSL to Halo 2 circuits,
-and work required for using this compiler to generate zk-SNARK proofs is ongoing.
+As of this writing, we have an optimizing circuit compiler for OSL to Halo 2 circuits,
+work required for using this compiler to generate zk-SNARK proofs is ongoing, and
+six out of eight compiler stages are tested to be semantics preserving on a small
+but interesting example.
 
 Work to prove the OSL compilation pipeline correct is also ongoing.\footnote{This work began in
 \url{https://github.com/Orbis-Tertius/Coq-Arithmetization} and is ongoing in
@@ -427,6 +430,6 @@ If we think about the requirements on a system in this way, with complex negativ
 requirements and a simple availability requirement stating that the system is doing behaviors
 a certain percentage of the time, then we can begin to imagine using succinct proofs to
 enforce those negative behavioral requirements and obtain a reliably behaving system
-made up of potentially unreliable components.
+made up of potentially unreliable components, with no components assumed to be reliable.
 
 \end{document}
