@@ -266,11 +266,19 @@ network, and each of these devices checks that $P$ is a proof of the statement.
 Based on the results, we conclude either that all honest verifiers verified the proof,
 or that perhaps something else is the case.
 
+In addition, we check that we computed the hashes correctly, using our distributed 
+network of verifiers. We do this by constructing each hash as the root of a Merkle
+hash tree over the sequence of digits in the input number, and randomly ask verifiers
+in our network to check our computations of nodes in the Merkle hash trees, just
+to convince ourselves that our computer was not tampered with in such a way that it
+computed the hashes wrong.
+
 What, if anything, have we gained by operating such a way? Do we finally know that
 $x + y = z$ if we can complete such a process? Let's consider a happy path scenario,
-where all verifiers successfully verified the proof. Given that succinct proof systems
-are probabilistic proof systems, there remains at least a negligible probability that
-the statement being proven is not true and all the verifiers accept the proof. Also,
+where all verifiers successfully verified the proof and the Merkle hash trees.
+Given that succinct proof systems are probabilistic proof systems, there remains at
+least a negligible probability that the statement being proven is not true and all
+the verifiers accept the proof. Also,
 there remains at least a negligible probability of a false positive due to hash collision,
 that is, that $x + y \neq z$ but someone found (other) numbers $x', y', z'$ such
 that $x' + y' = z'$, $h(x) = h(x')$, $h(y) = h(y'),$ and $h(z) = h(z')$. In such a
@@ -281,12 +289,19 @@ In conclusion, there remains at least a negligible
 probability that even if we see all the verifiers verify the proof, that nonetheless
 $x + y \neq z$. Still, there could be a lot to recommend this approach, depending on
 what you believe about it and what you are looking for. Computing the numbers $z, h(x), h(y)$,
-and $h(z)$ will be computationally hard, and so will computing the proof $P$ be hard.
+and $h(z)$ will be computationally hard, and computing the proof $P$ will also be hard.
 Transmitting $x, y,$ and $z$ is relatively expensive in terms of bandwidth / time,
 but transmitting $h(x), h(y), h(z)$ and $P$ is relatively cheap. Verifying $P$ is
 computationally easy, relatively speaking. By verifying $P$ over and over in a sufficiently
 distributed, decentralized, and diverse network of verifier devices, we may gain
 sufficient confidence that $P$ was checked by some verifier device which was not tampered
-with and which behaved correctly. 
+with and which behaved correctly. Similarly, by distributing the process of verifying
+the Merkle hash trees across the network, we may gain sufficient confidence that the
+input numbers were hashed correctly. Usefully, this can all happen without transmitting
+$x, y,$ and $z$ in their entirety to any of the verifier devices, and without any
+of the verifier devices computing $x + y$. By following this approach, we potentially get
+a probability of knowing $x + y = z$ and it being true which is like the probability we
+would get by redundantly computing $x + y$ many, many times in a decentralized, distributed,
+and diverse network of devices, but at a fraction of the cost of doing so.
 
 \end{document}
