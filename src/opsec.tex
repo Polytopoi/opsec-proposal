@@ -257,7 +257,8 @@ the statement as a whole is short.
 
 Let's suppose we are given $x$ and $y$, and we are going to find $z = x + y$ and check
 our work by the following approach. We first compute $z$, $h(x)$, $h(y)$, and $h(z)$.
-We don't have to be particularly careful in doing so. Next, we generate
+We don't have to be extraordinarily careful in doing so, because we will prove and verify
+that it was done correctly, in the remainder of the process. Next, we generate
 a succinct proof $P$ that $h(x), h(y),$ and $h(z)$ are respectively the SHA-256
 hashes of some billion-digit integers $x$ and $y$ and some integer $z$ such that
 $x + y = z$. Next, we distribute the tuple $(h(x), h(y), h(z), P)$ into a cluster of
@@ -283,11 +284,11 @@ there remains at least a negligible probability of a false positive due to hash 
 that is, that $x + y \neq z$ but someone found (other) numbers $x', y', z'$ such
 that $x' + y' = z'$, $h(x) = h(x')$, $h(y) = h(y'),$ and $h(z) = h(z')$. In such a
 case of hash collisions, the statement $P$ proves is true but it does not show the
-thing we ultimately want to show, that $x + y = z$.
-
-In conclusion, there remains at least a negligible
+thing we ultimately want to show, that $x + y = z$. In conclusion, there remains at least a negligible
 probability that even if we see all the verifiers verify the proof, that nonetheless
-$x + y \neq z$. Still, there could be a lot to recommend this approach, depending on
+$x + y \neq z$.
+
+There could be a lot to recommend this kind of approach, depending on
 what you believe about it and what you are looking for. Computing the numbers $z, h(x), h(y)$,
 and $h(z)$ will be computationally hard, and computing the proof $P$ will also be hard.
 Transmitting $x, y,$ and $z$ is relatively expensive in terms of bandwidth / time,
@@ -303,5 +304,70 @@ of the verifier devices computing $x + y$. By following this approach, we potent
 a probability of knowing $x + y = z$ and it being true which is like the probability we
 would get by redundantly computing $x + y$ many, many times in a decentralized, distributed,
 and diverse network of devices, but at a fraction of the cost of doing so.
+
+Actually executing on such an approach is a many-faceted problem. It involves building
+a distributed, decentralized, and diverse network of verifier devices. Each device is probably a
+combination of hardware and software. The hardware need not be entirely bug-free, as long as it
+is diverse enough that not all verifier devices will fail in the same way due to a hardware bug.
+If the hardware is diverse, then there will be more than one verifier program, although they
+might all be compiled from the same source code. If all of the verifier programs in the network
+are compiled from the same source program, then it is probably good enough if that source
+program is proven secure, meaning that (in the semantics of the source language) it will not
+accept a proof unless that proof satisfies the rules of the succinct proof protocol.
+
+Another interesting approach to building a network of verifier devices could be to
+make an ASIC or an FPGA program which contains all of the logic for
+performing the verifier protocol and which is proven (in the semantics of the circuit diagram
+language) to be secure in the sense of always rejecting invalid proofs. This would
+probably be more expensive than a software solution, but it would remove some sources
+of uncertainty, such as around the existence of bugs in the logic to compile the source
+language to the target language, or the existence of bugs in general-purpose hardware
+circuits which have not been proven correct.
+
+There is also a lot to take into consideration in designing the proof protocol itself,
+the implementation of proving, and the statements to be proven. In what type of language
+should the statements to be proven be written, and how should those statements together
+with data satisfying them be turned into proofs?
+
+A popular approach to answering these questions is to consider all proving problems
+as cases of the problem of verifying the results of computations, and to express the
+statements to be proven in the form ``program $X$ when run on input $Y$ results in $Z$.''
+This approach has the advantages of generality, familiarity for software engineers, and the
+existence of well studied methods to do it and well capitalized projects to do it.
+However, it is not the only approach worth considering, because it does have some
+major limitations. 
+
+Consider step 3(a) in the previously outlined process for knowing the correct answer
+to a question: that is to express the intentions correctly as propositions in a formal
+language. Programs do not express propositions; they express computational processes.
+Programs can be used to express propositions indirectly, by writing a program which
+would have a certain output (say 1) only if the proposition is true. However, if one
+takes this approach, it's best not to assume, but to prove \emph{a priori}\/ that
+the program would have that certain output only if the proposition of interest is true.
+The difficulty at this point is that proving things about programs that run on von
+Neumann\footnote{or Harvard architecture} machines is typically hard, requiring
+lots of time and effort of highly specialized proof engineers.
+
+Proving things about programs that run on von Neumann machines is an unnecessary step,
+if we consider that we can express propositions directly in a formal language, say a
+version of predicate logic, and that we can potentially generate succinct proofs of
+those propositions, potentially without using a von Neumann machine in the process
+of verifying those proofs (instead using specialized, proven circuits). If we take
+that idea to its logical conclusion, then we can imagine a process where we don't need
+to prove facts about the behavior of a von Neumann machine in order to performs steps
+3(a-b), where we check that if our base assumptions are satisfied then our system
+will behave as intended.
+
+Step 3(a) is in this scenario is the process of determining,
+through a combination of cognition and testing, that we correctly expressed the
+intentions in a formal language. Step 3(b) involves proving that the succinct
+proving protocol is correct, in the sense that what it proves is whatever proposition
+is expressed as its input. However, the implementation of the proving protocol need
+not be proven correct in its entirety; what must be proven correct is the implementation
+of the subset of the proving protocol which the verifier must perform. If the proving
+protocol implementation is wrong, but the verifier implementation is correct up to a
+negligible probability of unsoundness, then the worst that has a non-negligible probability
+of happening is a failure to prove something, which is typically more acceptable than
+certifying something as true which is false.
 
 \end{document}
