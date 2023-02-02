@@ -8,7 +8,7 @@
 \usepackage{lmodern}
 \usepackage{hyperref}
 
-\title{Succinct proofs for instutitional finance}
+\title{Succinct proofs for critical systems}
 \author{ \\ Morgan Thomas \\ Casper Association \\ morgan@casper.network }
 
 
@@ -17,9 +17,16 @@
 \maketitle
 
 \begin{abstract}
-	It is possible and obligatory for engineering teams to know that critical
-	IT systems work as intended.
-	TODO
+	It's not obvious how to know things about the world, but knowing that
+	critical systems will work correctly is a matter of duty for the
+	engineers who work on them. How can we get beyond uncertainty into a
+	realm of being reasonably certain that the systems we build will work,
+	or at least won't exhibit certain particularly unacceptable behaviors? 
+	Is this even realistic? This proposal advises that it is realistic to
+	obtain a reasonable degree of certainty of systems we build
+	satisfying negative requirements we place on their behaviors, for
+	a broad set of use cases which can be supported by succinct proving
+	with distributed, decentralized verifying.
 \end{abstract}
 
 What does it mean to know something, can we know anything, and if so, how
@@ -369,5 +376,56 @@ protocol implementation is wrong, but the verifier implementation is correct up 
 negligible probability of unsoundness, then the worst that has a non-negligible probability
 of happening is a failure to prove something, which is typically more acceptable than
 certifying something as true which is false.
+
+The preceding argument outlines some of the considerations that are going into the
+design and implementation of OSL, the Open Specification Language, and its
+compiler.\footnote{\url{https://github.com/CasperAssociation/osl}}
+The Open Specification Language is a version of predicate logic, with some basic type theory,
+which is designed to be powerful enough to be useful across the board in practice, and also weak enough
+to be feasibly compile fairly directly into arithmetic circuits
+for use with succinct proving systems such as Halo 2.\footnote{\url{https://github.com/zcash/halo2}}
+As of this writing, we have an 8-stage optimizing circuit compiler for OSL to Halo 2 circuits,
+and work required for using this compiler to generate zk-SNARK proofs is ongoing.
+
+Work to prove the OSL compilation pipeline correct is also ongoing.\footnote{This work began in
+\url{https://github.com/Orbis-Tertius/Coq-Arithmetization} and is ongoing in
+\url{https://github.com/CasperAssociation/Isabelle-Arithmetization/} as of this writing.}
+This proving work is being carried out using proof assistants. Proving such complicated
+theorems, and checking the proofs entirely by hand, is not feasible, which is why proof
+assistants are needed to help discover the proofs and to check them.
+
+This proposal opines that:
+\begin{enumerate}
+	\item it is a useful direction to continue the development and formal verification
+		of OSL and its compiler;
+	\item it will be useful to apply OSL to proving that questions have been answered
+		correctly for the purposes of high stakes engineering environments;
+	\item it is a useful direction because of the degrees of certainty that can
+		be achieved by distributing, decentralizing, and diversifying the process of
+		verification;
+	\item this approach is different from its peers in that it envisions proving propositions
+		without first expressing them as proposition-checking programs;
+	\item such an approach is feasible to realize, and would bring down the price point
+		of reliably producing knowledge and truths, when the highest obtainable degree
+		of reliability in doing so is required.
+\end{enumerate}
+
+Just how broadly does this approach apply? What can we know about the behaviors of our systems
+by building them in such a way? We can't know (without assumptions) that our systems will do
+anything, since after all the Earth and everything on it may be vaporized by a giant laser,
+leaving no part of our system left to exhibit any behaviors. All we can really know is
+that the system won't exhibit certain behaviors, such as verifying a falsehood. So if we
+divide behavioral requirements into positive (it \emph{does}\/ do something) and negative
+(it \emph{does not}\/ do something), we may find that we can, up to a negligible probability
+of failure, ensure that negative behavioral requirements are satisfied. Positive behavioral
+requirements on a system may be impossible to ensure, as long as nuclear war remains a possibility,
+but even if so, behavioral requirements can be adequately expressed as negative requirements, of the form
+``the system \emph{does not}\/ behave except in the expected ways,'' together with an
+availability (uptime) requirement such as is commonly found in service level agreements.
+If we think about the requirements on a system in this way, with complex negative behavioral
+requirements and a simple availability requirement stating that the system is doing behaviors
+a certain percentage of the time, then we can begin to imagine using succinct proofs to
+enforce those negative behavioral requirements and obtain a reliably behaving system
+made up of potentially unreliable components.
 
 \end{document}
