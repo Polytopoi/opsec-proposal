@@ -30,7 +30,7 @@ piece of tech is working as intended is often the responsibility of engineering 
 Is this duty even possible to fulfill?
 
 Let's suppose for the sake of argument that we are responsible for designing a system
-which takes as input a pair $(a,b)$  of million-digit integers and outputs the sum $a + b$.
+which takes as input a pair $(a,b)$  of billion-digit integers and outputs the sum $a + b$.
 Let's suppose that the stakes are as high as they can be; if the system outputs the wrong
 sum, then potentially people will die as a result. How can we know that the system is always
 working as intended?
@@ -125,5 +125,168 @@ is a trivial negative amount of money,
 say for instance a dollar. We obtain the expected value by multiplying the cost of the
 event (a negative amount) by the probability (a number between 0 and 1).
 
+Some reflection should show that this allowance of a negligible probability
+of our knowledge being false is necessary if we want to say that we can know things
+about the actual world. If we want to say we know anything about the past then we have
+to assume that our memory is to some extent accurate. If we want to say we know anything
+about the future then we have to make some assumptions saying that the future will
+be like the past in certain ways.
+
+With all of that groundwork laid, I would like to suggest a general strategy for
+knowing that a system's future behavior will be as intended. One must make some base
+assumptions about the system's future behavior. Based on those assumptions, one uses
+logic (i.e., truth-preserving inference) to prove that the system will behave as intended
+if the base assumptions hold. The base assumptions must be such that there is only a
+negligible probability of them not being true, or if there is a non-negligible probability
+of them not being true, then the worst consequences that can result are acceptable.
+This description takes into consideration that a system may have various failure modes,
+some more acceptable than others. E.g., it is more acceptable if a plane's engines fail
+to start on the runway, than if they stop unexpectedly while the plane is flying.
+
+The strategy just outlined allows for obtaining knowledge with the highest obtainable
+degrees of confidence. We can break down this strategy into four steps:
+\begin{enumerate}
+	\item selecting base assumptions which appropriately limit the risk entailed
+		by the possibilities of those assumptions being false;
+	\item testing those base assumptions extensively to get a sense of how
+		likely it is that they will be false under actual conditions;
+	\item ensuring that if the base assumptions are true, then necessarily the
+		system will work as intended, because:
+		\begin{enumerate}
+			\item the intentions have been correctly expressed as propositions in a formal language;
+			\item those propositions follow from the base assumptions by a series of truth-preserving inferences.
+		\end{enumerate}
+\end{enumerate}
+The base assumptions are the things that we cannot know \emph{a priori}\/ but must
+assume about the system and its operating conditions in order to know \emph{a priori}\/ that
+the system would behave as intended under those conditions. The base assumptions can
+also be conditions under which the system would not exhibit certain failure modes.
+For example, a computer system cannot be expected to exhibit the correct behaviors when it has
+no power supply, but it can still be expected not to exhibit arbitrary incorrect behaviors
+when it has no power. So to know that the system does the right things, we must assume
+a power source, but to know that the system does not do the wrong things, we need not assume
+a power source, in this example.
+
+Steps 3(a-b) amount to verifying that the base assumptions are sufficient conditions
+for correct operation of the system as designed. With these steps completed, we know
+\emph{a priori}\/ that the system would behave as designed if the base assumptions were
+true. In other words, with steps 3(a-b) completed, we know that we have completely
+expressed, as the base assumptions, what needs to be tested.
+
+Let us now consider some approaches we could take to apply this strategy to building
+and validating a system for adding together two billion-digit integers.
+
+For example, let's say that we build an adding circuit out of transistors in a
+semiconductor chip.\footnote{This is an oddball example; more typically we would solve this
+problem by writing a computer program, but this example has the advantage of giving
+us less to think about when we go to verify the solution, because we only have
+to verify the hardware, not the hardware and the program, and the hardware should
+have relatively simple behavior, since it should only add and nothing else.}
+For our base assumptions, we assume that we can model the chip with a circuit diagram,
+relying on the transistors exhibiting some standard, specified transistor behaviors.
+In other words, we assume that the chip will behave the same way that its circuit diagram
+behaves, in some idealized mathematical interpretation of the diagram's behavior.
+In this way we can think of the circuit as computing a mathematical function (from
+the input pin states to the output pin states), the same function specified by its
+circuit diagram. We can prove \emph{a priori}\/ that the function specified by the
+circuit diagram is the intended addition function, and we can test that
+the circuit behaves the same as its circuit diagram.
+
+A known issue with this approach is that semiconductor chips do not exhibit
+their circuit diagrams' mathematically ideal behavior under all conditions. For
+example, radiation in the environment can cause a circuit to stop exhibiting
+its intended behavior and instead exhibit random or semi-arbitrary behaviors.
+Also, for example, a circuit's behavior may deviate from the norm outside of its
+stable operating temperature range. We can rely on circuits to behave as intended
+almost all of the time, but if this is not good enough, if we need to get the
+right answer every time, then the approach needs some more work.
+
+We can for example try having two copies of the same circuit run in parallel,
+both on the same input. If they give different answers, then we keep asking
+them the question until they give the same answer. This approach lowers the
+odds that the system will give the wrong answer. We can keep repeating the
+computation as many times as we want until the probability is negligible that
+we got the wrong answer, unless somehow all of the redundant computations
+were tampered with to produce the same wrong answer.
+
+What if this is still not good enough? What if we want to ensure that in the event
+where we are unable to perform a correct computation, because our computing
+instruments have been tampered with somehow and always give the wrong result,
+then our system still will not give the wrong answer, and will instead fail
+to give an answer? Can this be done?
+
+In extremis, probably this can't be done. Let's suppose that God decides one day
+to modify the laws of physics such that all of the adding circuits now give
+the result that $2+2=5$ where they used to give the result $2+2=4$. Can we have
+a trusted computing environment if God is interested in changing the laws of physics
+up on us just to try to trick us into having false beliefs about numbers? I would say
+probably not.
+
+Let's try to set our sights a little lower, on something that could potentially be done.
+Let's say that we want to verify that a computation was done correctly, without
+assuming that any particular execution environment hasn't been tampered with. Let's also
+not assume that any particular small set of execution environments contains one which
+hasn't been tampered with. But let's assume that we can produce an execution environment
+which we can trust, say by buying one new at the store, or by ordering one to be made
+from scratch. Let's assume that God won't change the laws of physics under us, so that
+circuits will continue to behave the same way tomorrow. Can we then solve a problem,
+such as adding two integers, and know that our answers are correct under such assumptions,
+that is, without assuming that any particular execution environment is working right,
+or assuming that any particular set of execution environments contains one that is
+working right?
+
+In theory, it can be done. One can imagine a process where before we accept the answer,
+we randomly select a billion computers out of all the computers that exist, and we
+also have a billion people independently compute the answer by hand with pencil and
+paper, and then we accept as true only an answer validated by most of the parties
+which we ourselves computed to be true. The idea here would be that each person who
+can be trusted can trust themselves, and if my answer is what most people and computers
+got, then odds are I didn't make an error and they're not all lying to me. Of course,
+the issue with this approach is that it's impractical; we can't actually deploy a solution
+to anything that works this way.
+
+This is where succinct proof systems start to look really useful for solving the problem.
+Succinct proofs allow us to gain knowledge by doing a fairly small, bounded amount of work
+as long as the proposition we want to know is stated concisely.
+For example, one can use a succinct proof to show ``$h(x)$, $h(y)$, and $h(z)$ are
+respectively the SHA-256 hashes of some billion-digit integers $x$ and $y$ and some
+integer $z$ such that $x + y = z$.'' In this statement, $h(x), h(y)$ and $h(z)$ each
+refer to specific numbers, whereas $x, y,$ and $z$ are variables of unspecified values.
+Whereas $x$ and $y$ each have a billion digits, their hashes are short, and therefore
+the statement as a whole is short.
+
+Let's suppose we are given $x$ and $y$, and we are going to find $z = x + y$ and check
+our work by the following approach. We first compute $z$, $h(x)$, $h(y)$, and $h(z)$.
+We don't have to be particularly careful in doing so. Next, we generate
+a succinct proof $P$ that $h(x), h(y),$ and $h(z)$ are respectively the SHA-256
+hashes of some billion-digit integers $x$ and $y$ and some integer $z$ such that
+$x + y = z$. Next, we distribute the tuple $(h(x), h(y), h(z), P)$ into a cluster of
+people's devices, say a billion devices with a billion owners in a decentralized
+network, and each of these devices checks that $P$ is a proof of the statement.
+Based on the results, we conclude either that all honest verifiers verified the proof,
+or that perhaps something else is the case.
+
+What, if anything, have we gained by operating such a way? Do we finally know that
+$x + y = z$ if we can complete such a process? Let's consider a happy path scenario,
+where all verifiers successfully verified the proof. Given that succinct proof systems
+are probabilistic proof systems, there remains at least a negligible probability that
+the statement being proven is not true and all the verifiers accept the proof. Also,
+there remains at least a negligible probability of a false positive due to hash collision,
+that is, that $x + y \neq z$ but someone found (other) numbers $x', y', z'$ such
+that $x' + y' = z'$, $h(x) = h(x')$, $h(y) = h(y'),$ and $h(z) = h(z')$. In such a
+case of hash collisions, the statement $P$ proves is true but it does not show the
+thing we ultimately want to show, that $x + y = z$.
+
+In conclusion, there remains at least a negligible
+probability that even if we see all the verifiers verify the proof, that nonetheless
+$x + y \neq z$. Still, there could be a lot to recommend this approach, depending on
+what you believe about it and what you are looking for. Computing the numbers $z, h(x), h(y)$,
+and $h(z)$ will be computationally hard, and so will computing the proof $P$ be hard.
+Transmitting $x, y,$ and $z$ is relatively expensive in terms of bandwidth / time,
+but transmitting $h(x), h(y), h(z)$ and $P$ is relatively cheap. Verifying $P$ is
+computationally easy, relatively speaking. By verifying $P$ over and over in a sufficiently
+distributed, decentralized, and diverse network of verifier devices, we may gain
+sufficient confidence that $P$ was checked by some verifier device which was not tampered
+with and which behaved correctly. 
 
 \end{document}
