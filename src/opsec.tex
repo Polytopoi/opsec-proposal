@@ -26,7 +26,8 @@
 	obtain a reasonable degree of certainty of systems we build
 	satisfying negative requirements we place on their behaviors, for
 	a broad set of use cases which can be supported by succinct proving
-	with distributed, decentralized verifying.
+	with distributed, decentralized verifying. With zero knowledge proving,
+	these processes can also protect privacy.
 \end{abstract}
 
 What does it mean to know something, can we know anything, and if so, how
@@ -42,8 +43,8 @@ Let's suppose that the stakes are as high as they can be; if the system outputs 
 sum, then potentially people will die as a result. How can we know that the system is always
 working as intended? The example is contrived, but since it is such a simple example,
 if we can't solve this instance of the problem, then chances are we can't solve the problem
-in any instance. It turns out that a lot of difficult issues arise in trying to solve
-for this contrived example.
+of knowing that a system is working as intended for any interesting application.
+It turns out that a lot of difficult issues arise in trying to solve for this contrived example.
 
 We can immediately throw out the option of hand-checking the sums every time,
 because this process is too slow, too expensive, and too susceptible to human error.
@@ -315,6 +316,15 @@ of the verifier devices computing $x + y$. By following this approach, we potent
 a probability of knowing $x + y = z$ and it being true which is like the probability we
 would get by redundantly computing $x + y$ many, many times in a decentralized, distributed,
 and diverse network of devices, but at a fraction of the cost of doing so.
+
+In some applications, there is sensitive, private information involved. If we want to
+use a massive distributed network to verify facts based on such information, it may
+be problematic from a privacy standpoint. Fortunately, succinct proving systems are also
+often zero-knowledge proving systems, which means roughly that the proofs do not reveal the
+information used to generate the proofs which is not contained in the statements they prove.
+This zero-knowledge characteristic of a succinct proving system means that we can use it
+to verify publicly available statements using publicly available proofs, even when the process
+of generating the proofs required inputs which were private.
 
 Actually executing on such an approach is a many-faceted problem. It involves building
 a distributed, decentralized, and diverse network of verifier devices. Each device is probably a
