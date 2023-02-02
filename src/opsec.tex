@@ -40,7 +40,10 @@ Let's suppose for the sake of argument that we are responsible for designing a s
 which takes as input a pair $(a,b)$  of billion-digit integers and outputs the sum $a + b$.
 Let's suppose that the stakes are as high as they can be; if the system outputs the wrong
 sum, then potentially people will die as a result. How can we know that the system is always
-working as intended?
+working as intended? The example is contrived, but since it is such a simple example,
+if we can't solve this instance of the problem, then chances are we can't solve the problem
+in any instance. It turns out that a lot of difficult issues arise in trying to solve
+for this contrived example.
 
 We can immediately throw out the option of hand-checking the sums every time,
 because this process is too slow, too expensive, and too susceptible to human error.
