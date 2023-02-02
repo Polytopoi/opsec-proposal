@@ -1,0 +1,109 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[total={7in,9in}]{geometry}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{hyperref}
+
+\title{Succinct proofs for instutitional finance}
+\author{ \\ Morgan Thomas \\ Casper Association \\ morgan@casper.network }
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	It is possible and obligatory for engineering teams to know that critical
+	IT systems work as intended.
+	TODO
+\end{abstract}
+
+What does it mean to know something, can we know anything, and if so, how
+can we know things, while also knowing that we know them? Perhaps these questions
+gain their greatest sense of urgency in the context of duty, such as when we are
+responsible for people's lives, or for people's money. To know that a life-sustaining
+piece of tech is working as intended is often the responsibility of engineering teams.
+Is this duty even possible to fulfill?
+
+Let's suppose for the sake of argument that we are responsible for designing a system
+which takes as input a pair $(a,b)$  of million-digit integers and outputs the sum $a + b$.
+Let's suppose that the stakes are as high as they can be; if the system outputs the wrong
+sum, then potentially people will die as a result. How can we know that the system is always
+working as intended?
+
+We can immediately throw out the option of hand-checking the sums every time,
+because this process is too slow, too expensive, and too susceptible to human error.
+
+Let's suppose we can test the system on millions of randomly generated inputs, using
+some known-good process to find the sums $a + b$ of the random pairs $(a, b)$, and
+comparing those expected sums against the actual sums output by our system. If so,
+this will provide empirical evidence, but not overall certainty, that the system will always
+work as intended. There are a few issues which limit the usefulness of this type of testing:
+
+\begin{itemize}
+	\item Often, the sample space is too large; there are too many cases to test all
+		of them, and so we need to select a subset of cases to test, which leaves
+		open the possibility that the system doesn't work on some untested inputs.
+	\item In order to draw conclusions about future behavior from past tests, we need
+		to assume that the system will behave in the future the same ways it behaved
+		in the past under the same conditions.
+	\item Conditions under which a system is tested may be different from conditions
+		under which it is used, resulting in different behavior on the same inputs
+		in testing versus production. For example, interference from actors with
+		bad intentions may occur in production when it did not occur in testing.
+	\item This type of testing presupposes that we have a known good process for checking
+		a result or generating a correct result. If we don't have a known good process
+		to check against, then the best we can get out of this type of testing is
+		evidence that two different processes for arriving at the answer get the
+		same answer. This means that if either process is wrong, then both processes
+		are giving the same wrong answer, as far as the tested cases go.
+\end{itemize}
+
+Testing is a form of science. Science is the process of proposing falsifiable hypotheses and
+then performing tests which either refute them or fail to refute them.
+A test of a hypothesis must be such that it has multiple imaginable observable outcomes,
+some of which would refute the hypothesis if they were observed.
+Failing to refute a hypothesis provides some amount of evidence for the hypothesis, 
+while leaving open the possibility that it is wrong.
+
+It is debatable whether science ever yields knowledge about the future. It is however clear
+that for the purposes of engineering, science is the only process which could potentially
+yield knowledge about the future. Without using science we cannot know anything except
+what we know \emph{a priori}, that is, prior to experience. \emph{A priori}\/ truths would
+still be true regardless of what kind of world sense data presents. They include logical
+and mathematical truths. \emph{A priori}\/ truths will not by themselves give us knowledge
+that a system will work as intended, because a system is a thing that exists physically and
+presents itself to us through sense data. There is nothing we can know \emph{a priori}\/
+about the future behavior of a system.
+
+\emph{A priori}\/ knowledge is useful for engineering, in combination with scientific
+knowledge. This is true when and to the extent that some description of a mathematical object
+can serve as a model of a real world system. Modeling is a useful technique because
+\emph{a priori}\/ knowledge about mathematical objects is possible. To the extent
+that something in the world resembles a certain mathematical model, we can know propositions
+about the actual thing which are predicted by the hypothesis that the model resembles
+the actual thing.
+
+The following points are debatable: that we can have
+\emph{a priori}\/ knowledge, and that we can derive scientific knowledge by the process
+of modeling and testing. Indeed, there is still a debate as to whether we can have knowledge.
+There is also a debate as to how knowledge can be defined. My goal here is not to get
+into any of these debates. I cannot define knowledge or convince a hardcore skeptic
+that knowledge is possible. Instead, I assume an audience that already believes in the
+possibility of knowledge about the future behavior of systems, and I am mainly interested in
+the technical question of how such knowledge can be obtained.
+
+Part of the usual connotation of knowledge is truth. For example, Aristotle defines knowledge
+as justified true belief. By this definition, everything known is true. The truth is the
+juice (what we want from the knowledge), and the justification is the squeeze (the basis
+on which we have the knowledge). Aristotle's definition of knowledge is not only
+insufficient, as argued by Gettier (1963),\footnote{Gettier, E. L. (1963).
+``Is Justified True Belief Knowledge?'' Analysis 23: 121-3.}
+but also terribly vague and ambiguous as to what constitutes sufficient or
+right justification for knowledge.
+
+\end{document}
