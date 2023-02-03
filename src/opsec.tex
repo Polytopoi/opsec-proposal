@@ -286,7 +286,7 @@ or that perhaps something else is the case.
 
 In addition, we check that we computed the hashes correctly, using our distributed 
 network of verifiers. We do this by constructing each hash as the root of a Merkle
-hash tree over the sequence of digits in the input number, and randomly ask verifiers
+hash tree over the sequence of digits in the input number, and randomly asking verifiers
 in our network to check our computations of nodes in the Merkle hash trees, just
 to convince ourselves that our computer was not tampered with in such a way that it
 computed the hashes wrong.
@@ -402,7 +402,7 @@ design and implementation of OSL, the Open Specification Language, and its
 compiler.\footnote{\url{https://github.com/CasperAssociation/osl}}
 The Open Specification Language is a version of predicate logic, with some basic type theory,
 which is designed to be powerful enough to be useful across the board in practice, and also weak enough
-to be feasibly compile fairly directly into arithmetic circuits
+to feasibly be compiled fairly directly into arithmetic circuits
 for use with succinct proving systems such as Halo 2.\footnote{\url{https://github.com/zcash/halo2}}
 As of this writing, we have an optimizing circuit compiler for OSL to Halo 2 circuits,
 work required for using this compiler to generate zk-SNARK proofs is ongoing, and
