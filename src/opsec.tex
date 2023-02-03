@@ -8,7 +8,7 @@
 \usepackage{lmodern}
 \usepackage{hyperref}
 
-\title{Succinct proofs for critical systems}
+\title{Succinct proofs and provable specifications for critical systems}
 \author{ \\ Morgan Thomas \\ Casper Association \\ morgan@casper.network }
 
 
@@ -27,7 +27,12 @@
 	satisfying negative requirements we place on their behaviors, for
 	a broad set of use cases which can be supported by succinct proving
 	with distributed, decentralized verifying. With zero knowledge proving,
-	these processes can also protect privacy.
+	these processes can also protect privacy. The Open Specification Language
+	(OSL) and its compiler, which are designed to support succinct, zero knowledge proving
+	and formal verification of the correctness of those succinct proving processes,
+	can play a supportive role in building
+	systems whose conformance to their negative behavioral requirements is verifiable
+	at runtime and knowable before the fact.
 \end{abstract}
 
 What does it mean to know something, can we know anything, and if so, how
@@ -261,7 +266,7 @@ This is where succinct proof systems start to look really useful for solving the
 Succinct proofs allow us to gain knowledge by doing a fairly small, bounded amount of work
 as long as the proposition we want to know is stated concisely.
 For example, one can use a succinct proof to show ``$h(x)$, $h(y)$, and $h(z)$ are
-respectively the SHA-256 hashes of some billion-digit integers $x$ and $y$ and some
+respectively SHA-256 Merkle hashes of some billion-digit integers $x$ and $y$ and some
 integer $z$ such that $x + y = z$.'' In this statement, $h(x), h(y)$ and $h(z)$ each
 refer to specific numbers, whereas $x, y,$ and $z$ are variables of unspecified values.
 Whereas $x$ and $y$ each have a billion digits, their hashes are short, and therefore
@@ -306,7 +311,7 @@ and $h(z)$ will be computationally hard, and computing the proof $P$ will also b
 Transmitting $x, y,$ and $z$ is relatively expensive in terms of bandwidth / time,
 but transmitting $h(x), h(y), h(z)$ and $P$ is relatively cheap. Verifying $P$ is
 computationally easy, relatively speaking. By verifying $P$ over and over in a sufficiently
-distributed, decentralized, and diverse network of verifier devices, we may gain
+distributed, decentralized, and perhaps diverse network of verifier devices, we may gain
 sufficient confidence that $P$ was checked by some verifier device which was not tampered
 with and which behaved correctly. Similarly, by distributing the process of verifying
 the Merkle hash trees across the network, we may gain sufficient confidence that the
