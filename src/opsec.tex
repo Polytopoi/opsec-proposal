@@ -348,7 +348,17 @@ language) to be secure in the sense of always rejecting invalid proofs. This wou
 probably be more expensive than a software solution, but it would remove some sources
 of uncertainty, such as around the existence of bugs in the logic to compile the source
 language to the target language, or the existence of bugs in general-purpose hardware
-circuits which have not been proven correct.
+circuits which have not been proven correct.\footnote{A hardware circuit is in practice
+going to be described not directly as a circuit, but in a hardware description language
+which gets compiled to a circuit. In the process of proving that a circuit diagram is
+correct, therefore, one would use either a verified circuit compiler (which is proven to
+be semantics preserving on all inputs), or a verifying circuit compiler (which generates
+a proof that the translation is semantics preserving while also generating a circuit).
+In comparison, with a solution consisting of hardware and software, one has the aforementioned
+problems to solve to verify the correctness of the hardware, but in addition, one has
+the problem of verifying the software, which includes verifying the correctness of the
+source program in the source language semantics, and verifying that this implies the
+correctness of the compiled program in the target language semantics.}
 
 There is also a lot to take into consideration in designing the proof protocol itself,
 the implementation of proving, and the statements to be proven. In what type of language
